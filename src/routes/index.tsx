@@ -9,7 +9,7 @@ const Docs = lazy(() => import("@/pages/docs"));
 // All application routes
 export const appRoutes: RouteObject[] = [
   // Default redirect
-  { path: "/", element: <Navigate to="/docs" replace /> },
+  { path: "/", element: <Navigate to="/personal" replace /> },
 
   // Personal section with nested routes
   ...personalRoutes,

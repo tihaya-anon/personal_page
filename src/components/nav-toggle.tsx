@@ -1,31 +1,35 @@
 import { useEffect, useState } from "react";
 import { Button } from "#/ui/button";
-import { Book, User } from "lucide-react";
+import { Book as Doc, User as Personal } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { buttonStyle, iconSize } from "@/constants/icon-button-style";
 type NavType = "personal" | "docs";
 export default function NavToggle() {
   const navigate = useNavigate();
-  const [nav, setNav] = useState<NavType>(document.location.pathname.split("/")[1] as NavType);
+  const toPage = (page: NavType) => {
+    page = page === "personal" ? "docs" : "personal";
+    return page
+  };
+  const [curPage, setCurPage] = useState<NavType>("personal");
 
   const toggleNav = () => {
-    navigate(nav === "personal" ? "/docs" : "/personal");
-    setNav(nav === "personal" ? "docs" : "personal");
+    navigate(`/${toPage(curPage)}`);
+    setCurPage(toPage(curPage));
   };
 
   useEffect(() => {
-    const currentNav = document.location.pathname.split("/")[1] as NavType;
-    setNav(currentNav);
+    const curPath = document.location.pathname.split("/")[1] as NavType;
+    setCurPage(curPath);
   }, []);
 
   return (
     <Button
       variant="ghost"
       onClick={toggleNav}
-      aria-label={`Switch to ${nav === "personal" ? "docs" : "personal"} view`}
+      aria-label={`Switch to ${toPage(curPage)} view`}
       className={buttonStyle}
     >
-      {nav === "personal" ? <Book className={iconSize} /> : <User className={iconSize} />}
+      {curPage === "personal" ? <Doc className={iconSize} /> : <Personal className={iconSize} />}
     </Button>
   );
 }
