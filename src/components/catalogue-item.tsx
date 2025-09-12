@@ -7,9 +7,10 @@ interface CatalogueItemProps {
   node: AstNode;
   anchor: string;
   active?: boolean;
+  onClick?: () => void;
 }
 
-export default function CatalogueItem({ node, anchor, active = false }: CatalogueItemProps) {
+export default function CatalogueItem({ node, anchor, active = false, onClick }: CatalogueItemProps) {
   const level = node.attributes?.level as number;
   const [isActive, setIsActive] = useState(active);
   const [isHovered, setIsHovered] = useState(false);
@@ -35,6 +36,7 @@ export default function CatalogueItem({ node, anchor, active = false }: Catalogu
       // Set this item as active
       setIsActive(true);
     }
+    onClick?.();
   };
 
   return (

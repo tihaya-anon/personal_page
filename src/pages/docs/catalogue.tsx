@@ -72,6 +72,7 @@ export default function Catalogue({ doc }: { doc: DocInfo }) {
           node={heading}
           anchor={heading.attributes?.id as string}
           active={activeId === (heading.attributes?.id as string)}
+          onClick={() => setActiveId(heading.attributes?.id as string)}
         />
       ))}
     </div>
