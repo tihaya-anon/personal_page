@@ -169,7 +169,7 @@ export default function NodeRenderer({ node, pk }: { node: AstNode; pk: string }
     }
 
     case "paragraph":
-      return <p className="leading-7">{renderChildren(node)}</p>;
+      return <p className="leading-7 text-justify">{renderChildren(node)}</p>;
 
     case "text":
       return <>{node.content}</>;
