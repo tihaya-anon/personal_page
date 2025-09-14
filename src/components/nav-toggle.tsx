@@ -8,7 +8,7 @@ export default function NavToggle() {
   const navigate = useNavigate();
   const toPage = (page: NavType) => {
     page = page === "personal" ? "docs" : "personal";
-    return page
+    return page;
   };
   const [curPage, setCurPage] = useState<NavType>("personal");
 
@@ -18,8 +18,9 @@ export default function NavToggle() {
   };
 
   useEffect(() => {
-    const curPath = document.location.pathname.split("/")[1] as NavType;
-    setCurPage(curPath);
+    let curPath = document.location.pathname.split("/")[1];
+    if (curPath != "docs" && curPath != "personal") curPath = "personal";
+    setCurPage(curPath as NavType);
   }, []);
 
   return (
