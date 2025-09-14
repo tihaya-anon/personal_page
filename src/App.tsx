@@ -21,7 +21,7 @@ function App() {
               <StarIcon
                 variant="primary"
                 size={500}
-                animation="draw"
+                animation="rotate"
                 strokeWidth={0.2}
                 title=""
                 animationDuration={2}

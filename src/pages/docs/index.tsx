@@ -168,13 +168,13 @@ export default function Docs() {
 
   return (
     <>
-      <div className="flex flex-row">
+      <div className="h-[calc(100vh-var(--spacing)*8)]">
         {view === "wide" && renderDocList()}
         <div
           className={cn(
             "fixed flex flex-col justify-center mx-auto",
             view === "narrow" ? "w-[100vw] px-0.5" : "w-[60vw] left-[20vw] right-[20vw]",
-            "h-[100vh]",
+            "h-full",
             paddingY,
           )}
         >
