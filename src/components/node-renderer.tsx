@@ -254,7 +254,7 @@ export default function NodeRenderer({ msg, node, pk }: { msg: string; node: Ast
       return (
         <Component
           className={cn(
-            isHeader ? "h-10 px-2 align-middle font-medium whitespace-nowrap" : "p-2 align-middle break-words",
+            isHeader ? "h-10 px-2 align-middle font-bold whitespace-nowrap" : "p-2 align-middle break-words",
             align,
           )}
         >
