@@ -41,7 +41,7 @@ type AstNode = {
 };
 export type { Attribute, AttributeValue, AstNode, AstNodeType };
 
-export default function NodeRenderer({ node, pk }: { node: AstNode; pk: string }): ReactNode {
+export default function NodeRenderer({ msg, node, pk }: { msg: string; node: AstNode; pk: string }): ReactNode {
   // Process a paragraph with mixed HTML and text content
   const { ref, resetCN } = useReactiveScrollBar();
   const processHtmlParagraph = (parent: AstNode): ReactNode => {
@@ -75,7 +75,7 @@ export default function NodeRenderer({ node, pk }: { node: AstNode; pk: string }
     return null;
   };
 
-  const renderChildren = (parent: AstNode): ReactNode => {
+  const renderChildren = (parent: AstNode, msg: string = ""): ReactNode => {
     // Check if parent contains HTML nodes that need special handling
     const hasHtmlNodes = parent.children?.some((child) => child.type === "html" || child.type === "inlineHtml");
 
@@ -87,7 +87,7 @@ export default function NodeRenderer({ node, pk }: { node: AstNode; pk: string }
     }
 
     // Standard rendering for non-HTML content
-    return parent.children?.map((child, index) => <NodeRenderer key={index} node={child} pk={pk} />);
+    return parent.children?.map((child, index) => <NodeRenderer key={index} msg={msg} node={child} pk={pk} />);
   };
 
   if (!node) return null;
@@ -232,28 +232,30 @@ export default function NodeRenderer({ node, pk }: { node: AstNode; pk: string }
       );
 
     case "tableHead":
-      return <thead className="[&_tr]:border-b font-bold bg-primary/25">{renderChildren(node)}</thead>;
+      return <thead className="[&_tr]:border-b font-bold bg-primary/25">{renderChildren(node, "thead")}</thead>;
 
     case "tableBody":
-      return <tbody className="[&_tr:last-child]:border-0">{renderChildren(node)}</tbody>;
+      return <tbody className="[&_tr:last-child]:border-0">{renderChildren(node, "tbody")}</tbody>;
 
     case "tableRow":
-      return <tr className="border-b bg-primary/5">{renderChildren(node)}</tr>;
+      return <tr className="border-b bg-primary/5">{renderChildren(node, msg)}</tr>;
 
     case "tableCell": {
       // Check if this cell is in a header row to determine if it should be a th or td
-      const isHeader = node.attributes?.header === true;
+      const isHeader = msg === "thead";
       const Component = isHeader ? "th" : "td";
-
-      return (
-        <Component
-          className={cn(
-            isHeader
-              ? "h-10 px-2 text-left align-middle font-medium whitespace-nowrap"
-              : "p-2 align-middle whitespace-nowrap",
+      const align = isHeader
+        ? "text-center"
+        : cn(
             node.attributes?.align === "center" && "text-center",
             node.attributes?.align === "right" && "text-right",
             node.attributes?.align === "left" && "text-left",
+          );
+      return (
+        <Component
+          className={cn(
+            isHeader ? "h-10 px-2 align-middle font-medium whitespace-nowrap" : "p-2 align-middle whitespace-nowrap",
+            align,
           )}
         >
           {renderChildren(node)}
