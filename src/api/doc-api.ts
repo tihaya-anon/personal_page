@@ -56,7 +56,7 @@ const fetchDocData = async (pk: string): Promise<DocInfo> => {
 
 const fetchDocList = async (): Promise<DocRow[]> => {
   try {
-    const response = await fetch("/data/docs-db.json");
+    const response = await fetch("/docs/docs-db.json");
     if (!response.ok) {
       throw new Error(`Failed to fetch doc list: ${response.statusText}`);
     }
