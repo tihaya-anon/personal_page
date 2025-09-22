@@ -41,7 +41,7 @@ type AstNode = {
 };
 export type { Attribute, AttributeValue, AstNode, AstNodeType };
 
-export default function NodeRenderer({ msg, node, pk }: { msg: string; node: AstNode; pk: string }): ReactNode {
+export default function NodeRenderer({ msg = "", node, pk }: { msg?: string; node: AstNode; pk: string }): ReactNode {
   // Process a paragraph with mixed HTML and text content
   const { ref, resetCN } = useReactiveScrollBar();
   const processHtmlParagraph = (parent: AstNode): ReactNode => {
@@ -254,7 +254,7 @@ export default function NodeRenderer({ msg, node, pk }: { msg: string; node: Ast
       return (
         <Component
           className={cn(
-            isHeader ? "h-10 px-2 align-middle font-medium whitespace-nowrap" : "p-2 align-middle break-words",
+            isHeader ? "h-10 px-2 align-middle font-bold whitespace-nowrap" : "p-2 align-middle break-words",
             align,
           )}
         >
